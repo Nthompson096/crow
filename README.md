@@ -59,7 +59,13 @@ and run
 python crow.py
 ```
 
-![image](https://github.com/user-attachments/assets/bd36ab0f-4e7b-4c9b-8b97-c23196eb35bb)
+## Blackbird search results at the bottom of the GUI:
+
+![image](https://github.com/user-attachments/assets/33a02c45-4243-4da3-b1d2-8334df0561d0)
+
+## Hudson rock email search:
+
+![image](https://github.com/user-attachments/assets/744f9508-ce50-4cab-b9f3-afbbf5e17349)
 
 
 Mind the ASCII; it's using the cli as the backend but it will work with most of the functions to be more GUI friendly (or attempt to be).
