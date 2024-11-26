@@ -69,6 +69,7 @@ python crow.py
 
 
 Mind the ASCII; it's using the cli as the backend but it will work with most of the functions to be more GUI friendly (or attempt to be).
+The Hudson email search is independent from blackbird and is it's own function inside the python script.
 
 ## More
 For more details about the project, visit the <a href="https://p1ngul1n0.gitbook.io/blackbird/">Docs</a>
