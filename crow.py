@@ -380,7 +380,7 @@ class BlackbirdGUI(QMainWindow):
                                 "86_balestek\n"
                                 "86-balestek\n"
                                 "86.balestek\n\n"
-                                "You can use '--permute' to create these variations and search them.")
+                                "NOTE: That permute username seems to only work if you only separate the username such as balestek 86. Probably to connect both usernames.")
 
     def show_permuteall_help(self):
         # Display a message box with details about permuting all elements
@@ -405,7 +405,7 @@ class BlackbirdGUI(QMainWindow):
                                 "86_balestek\n"
                                 "86-balestek\n"
                                 "86.balestek\n\n"
-                                "You can use '--permuteall' to create these variations and search them.")
+                                "You can use 'That permute username seems to only work if you only separate the username such as balestek 86. Probably to connect both usernames.")
 
 
     def show_AI_help(self):
