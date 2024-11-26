@@ -240,6 +240,7 @@ class BlackbirdGUI(QMainWindow):
     def search_hudson_rock(self):
         self.output_area.clear()
         query = self.hudson_email_input.text().strip()
+
         if not query:
             self.update_output("Please enter an email to search.\n")
             return
@@ -247,15 +248,12 @@ class BlackbirdGUI(QMainWindow):
         # We assume the query could be either an email or username, so we check it
         if "@" in query:
             query_type = "email"
-        # else:
-        #     query_type = "username"
+        else:
+            self.update_output("Invalid email address. Please enter a valid email.\n")
+            return
 
         base_url = "https://cavalier.hudsonrock.com/api/json/v2/osint-tools/"
-        
-        if query_type == "email":
-            endpoint = f"search-by-email?email={query}"
-        # elif query_type == "username":
-            # endpoint = f"search-by-username?username={query}"
+        endpoint = f"search-by-email?email={query}"
 
         url = base_url + endpoint
 
