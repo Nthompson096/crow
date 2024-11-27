@@ -289,7 +289,7 @@ class BlackbirdGUI(QMainWindow):
                 "verbose": self.verbose_checkbox.isChecked(),
                 "dump": self.dump_checkbox.isChecked(),
                 "instagram_session_id": self.instagram_session_id.text(),
-                "Extract metadata AI": self.AI_checkbox.isChecked(),
+                "Extract metadata AI": self.AI_checkbox.isChecked()
             }
             
             # Save the settings to the file with proper JSON format
