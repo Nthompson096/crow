@@ -272,56 +272,61 @@ class BlackbirdGUI(QMainWindow):
             # Ensure the file name ends with .json if not already
             if not file_name.endswith('.json'):
                 file_name += '.json'
-            
+
             # Collect the current settings into a dictionary
             settings = {
-                "mail to Search": self.hudson_email_input.text(),
-                "username": self.username_input.text(),
-                "email": self.email_input.text(),
-                "permute": self.permute_checkbox.isChecked(),
-                "permuteall": self.permuteall_checkbox.isChecked(),
-                "no_nsfw": self.no_nsfw_checkbox.isChecked(),
-                "proxy": self.proxy_input.text(),
-                "timeout": self.timeout_spinbox.value(),
-                "no_update": self.no_update_checkbox.isChecked(),
-                "csv": self.csv_checkbox.isChecked(),
-                "pdf": self.pdf_checkbox.isChecked(),
-                "verbose": self.verbose_checkbox.isChecked(),
-                "dump": self.dump_checkbox.isChecked(),
+                "hudson_email_input": self.hudson_email_input.text(),
+                "username_input": self.username_input.text(),
+                "email_input": self.email_input.text(),
+                "permute_checkbox": self.permute_checkbox.isChecked(),
+                "permuteall_checkbox": self.permuteall_checkbox.isChecked(),
+                "no_nsfw_checkbox": self.no_nsfw_checkbox.isChecked(),
+                "proxy_input": self.proxy_input.text(),
+                "timeout_spinbox": self.timeout_spinbox.value(),
+                "no_update_checkbox": self.no_update_checkbox.isChecked(),
+                "csv_checkbox": self.csv_checkbox.isChecked(),
+                "pdf_checkbox": self.pdf_checkbox.isChecked(),
+                "verbose_checkbox": self.verbose_checkbox.isChecked(),
+                "dump_checkbox": self.dump_checkbox.isChecked(),
                 "instagram_session_id": self.instagram_session_id.text(),
-                "Extract metadata AI": self.AI_checkbox.isChecked()
+                "AI_checkbox": self.AI_checkbox.isChecked()
             }
-            
+
             # Save the settings to the file with proper JSON format
             with open(file_name, 'w') as f:
                 json.dump(settings, f, indent=4)
-
-
 
     def load_settings(self):
         # Open a file dialog to select a JSON file to load
         file_name, _ = QFileDialog.getOpenFileName(self, "Open Settings", "", "JSON Files (*.json);;All Files (*)")
         if file_name:
-        # Load the settings from the JSON file
+            # Load the settings from the JSON file
             with open(file_name, 'r') as f:
                 settings = json.load(f)
-            
+
+            # Define a mapping of setting keys to widget methods and types
+            setting_mappings = {
+                "hudson_email_input": (self.hudson_email_input.setText, str),
+                "username_input": (self.username_input.setText, str),
+                "email_input": (self.email_input.setText, str),
+                "permute_checkbox": (self.permute_checkbox.setChecked, bool),
+                "permuteall_checkbox": (self.permuteall_checkbox.setChecked, bool),
+                "no_nsfw_checkbox": (self.no_nsfw_checkbox.setChecked, bool),
+                "proxy_input": (self.proxy_input.setText, str),
+                "timeout_spinbox": (self.timeout_spinbox.setValue, int),
+                "no_update_checkbox": (self.no_update_checkbox.setChecked, bool),
+                "csv_checkbox": (self.csv_checkbox.setChecked, bool),
+                "pdf_checkbox": (self.pdf_checkbox.setChecked, bool),
+                "verbose_checkbox": (self.verbose_checkbox.setChecked, bool),
+                "dump_checkbox": (self.dump_checkbox.setChecked, bool),
+                "instagram_session_id": (self.instagram_session_id.setText, str),
+                "AI_checkbox": (self.AI_checkbox.setChecked, bool)
+            }
+
             # Apply the loaded settings
-            self.hudson_email_input.setText(settings.get("mail to Search", ""))
-            self.username_input.setText(settings.get("username", ""))
-            self.email_input.setText(settings.get("email", ""))
-            self.permute_checkbox.setChecked(settings.get("permute", False))
-            self.permuteall_checkbox.setChecked(settings.get("permuteall", False))
-            self.no_nsfw_checkbox.setChecked(settings.get("no_nsfw", False))
-            self.proxy_input.setText(settings.get("proxy", ""))
-            self.timeout_spinbox.setValue(settings.get("timeout", 30))
-            self.no_update_checkbox.setChecked(settings.get("no_update", False))
-            self.csv_checkbox.setChecked(settings.get("csv", False))
-            self.pdf_checkbox.setChecked(settings.get("pdf", False))
-            self.verbose_checkbox.setChecked(settings.get("verbose", False))
-            self.dump_checkbox.setChecked(settings.get("dump", False))
-            self.instagram_session_id.setText(settings.get("instagram_session_id", ""))
-            self.AI_checkbox.setChecked(settings.get("Extract metadata AI", False))
+            for key, (set_method, value_type) in setting_mappings.items():
+                if key in settings:
+                    set_method(value_type(settings[key]))
 
     def show_instagram_help(self):
         # Display instructions for obtaining the Instagram session ID
