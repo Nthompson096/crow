@@ -380,7 +380,7 @@ class BlackbirdGUI(QMainWindow):
                                 "86_balestek\n"
                                 "86-balestek\n"
                                 "86.balestek\n\n"
-                                "NOTE: That permute username seems to only work if you only separate the username such as balestek 86. Probably to connect both usernames.")
+                                "NOTE: That permute username seems to only work if you only separate the username such as balestek 86.")
 
     def show_permuteall_help(self):
         # Display a message box with details about permuting all elements
@@ -405,7 +405,7 @@ class BlackbirdGUI(QMainWindow):
                                 "86_balestek\n"
                                 "86-balestek\n"
                                 "86.balestek\n\n"
-                                "You can use 'That permute username seems to only work if you only separate the username such as balestek 86. Probably to connect both usernames.")
+                                "You can use '--permuteall' to create these variations and search them.")
 
 
     def show_AI_help(self):
@@ -413,7 +413,9 @@ class BlackbirdGUI(QMainWindow):
         QMessageBox.information(self, "AI matadata help",
                                 "The '--ai' extracts metadata from a given username.\n\n"
                                 "For example, for the username 'balestek86', would have metadata in the search:\n"
-                                "Blackbird will automatically extract relevant metadata using AI. Results will be marked with a robot emoji (🤖) next to it for easy identification.\n")
+                                "Blackbird will automatically extract relevant metadata using AI. Results will be marked with a robot emoji (🤖) next to it for easy identification.\n"
+                                "However these results can be inaccurate due to the use of AI, sure it can extract metadata but it will limit the search!\n"
+                                "best to use your deducing skills and due diligence")
 
 
 
@@ -487,14 +489,6 @@ class BlackbirdGUI(QMainWindow):
         # Disable Run button and enable Stop button during execution
         self.run_button.setEnabled(False)
         self.stop_button.setEnabled(True)
-
-    def stop_blackbird(self):
-        # Stop the Blackbird process if running
-        if self.worker and self.worker.isRunning():
-            self.worker.terminate()
-            self.worker.wait()
-        self.run_button.setEnabled(True)  # Re-enable Run button
-        self.stop_button.setEnabled(False)  # Disable Stop button
 
     def stop_blackbird(self):
         # Stop the Blackbird process if running
