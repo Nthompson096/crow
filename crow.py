@@ -425,65 +425,53 @@ class BlackbirdGUI(QMainWindow):
 
         # Initialize the Blackbird command with the basic parameters
         command = ["python", "blackbird.py"]
-        
-        # Add username parameters if entered directly
-        if self.username_input.text():
-            usernames = [u.strip() for u in self.username_input.text().split(',')]
-            for username in usernames:
-                command.extend(["-u", username])
-            
-            # Add permute options if selected
-            if len(usernames) == 1:
-                if self.permute_checkbox.isChecked():
-                    command.append("--permute")
-                elif self.permuteall_checkbox.isChecked():
-                    command.append("--permuteall")
 
-        # Add username file parameter if selected
-        if self.username_file_input.text():
-            command.extend(["--username-file", self.username_file_input.text()])
+        # Function to handle appending parameters if text is present
+        def add_params(param, text, cmd_list):
+            if text:
+                items = [item.strip() for item in text.split(',')]
+                for item in items:
+                    cmd_list.extend([param, item])
 
-        # Add email parameters if entered directly
-        if self.email_input.text():
-            emails = [e.strip() for e in self.email_input.text().split(',')]
-            for email in emails:
-                command.extend(["-e", email])
+        # Add parameters for username and email
+        add_params("-u", self.username_input.text(), command)
+        add_params("-e", self.email_input.text(), command)
 
-        # Add email file parameter if selected
-        if self.email_file_input.text():
-            command.extend(["--email-file", self.email_file_input.text()])
-        
-        # Add other options like excluding NSFW, proxy, timeout, etc.
-        if self.AI_checkbox.isChecked():
-            command.append("--ai")
+        # Add file parameters if selected
+        file_params = {
+            "--username-file": self.username_file_input.text(),
+            "--email-file": self.email_file_input.text()
+        }
+        command.extend([param for param, value in file_params.items() if value])
 
-        # Add other options like excluding NSFW, proxy, timeout, etc.
-        if self.no_nsfw_checkbox.isChecked():
-            command.append("--no-nsfw")
-        
+        # Add permute options if selected and exactly one username is provided
+        if self.username_input.text() and len(self.username_input.text().split(',')) == 1:
+            if self.permute_checkbox.isChecked():
+                command.append("--permute")
+            elif self.permuteall_checkbox.isChecked():
+                command.append("--permuteall")
+
+        # Add other options based on checkbox states
+        checkboxes = {
+            "--ai": self.AI_checkbox.isChecked(),
+            "--no-nsfw": self.no_nsfw_checkbox.isChecked(),
+            "--no-update": self.no_update_checkbox.isChecked(),
+            "--csv": self.csv_checkbox.isChecked(),
+            "--pdf": self.pdf_checkbox.isChecked(),
+            "--verbose": self.verbose_checkbox.isChecked(),
+            "--dump": self.dump_checkbox.isChecked()
+        }
+        command.extend([param for param, checked in checkboxes.items() if checked])
+
+        # Add proxy and timeout options
         if self.proxy_input.text():
             command.extend(["--proxy", self.proxy_input.text()])
         
         command.extend(["--timeout", str(self.timeout_spinbox.value())])
-        
-        if self.no_update_checkbox.isChecked():
-            command.append("--no-update")
-        
+
+        # Add filter option if text is present
         if self.filter_input.text():
             command.extend(["--filter", self.filter_input.text()])
-        
-        # Handle output format options
-        if self.csv_checkbox.isChecked():
-            command.append("--csv")
-        
-        if self.pdf_checkbox.isChecked():
-            command.append("--pdf")
-        
-        if self.verbose_checkbox.isChecked():
-            command.append("--verbose")
-        
-        if self.dump_checkbox.isChecked():
-            command.append("--dump")
 
         # Set the Instagram session ID environment variable if entered
         if self.instagram_session_id.text():
@@ -500,6 +488,13 @@ class BlackbirdGUI(QMainWindow):
         self.run_button.setEnabled(False)
         self.stop_button.setEnabled(True)
 
+    def stop_blackbird(self):
+        # Stop the Blackbird process if running
+        if self.worker and self.worker.isRunning():
+            self.worker.terminate()
+            self.worker.wait()
+        self.run_button.setEnabled(True)  # Re-enable Run button
+        self.stop_button.setEnabled(False)  # Disable Stop button
 
     def stop_blackbird(self):
         # Stop the Blackbird process if running
