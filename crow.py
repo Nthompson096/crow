@@ -275,6 +275,7 @@ class BlackbirdGUI(QMainWindow):
             
             # Collect the current settings into a dictionary
             settings = {
+                "mail to Search": self.hudson_email_input.text(),
                 "username": self.username_input.text(),
                 "email": self.email_input.text(),
                 "permute": self.permute_checkbox.isChecked(),
@@ -288,6 +289,7 @@ class BlackbirdGUI(QMainWindow):
                 "verbose": self.verbose_checkbox.isChecked(),
                 "dump": self.dump_checkbox.isChecked(),
                 "instagram_session_id": self.instagram_session_id.text(),
+                "Extract metadata AI": self.AI_checkbox.isChecked(),
             }
             
             # Save the settings to the file with proper JSON format
@@ -305,6 +307,7 @@ class BlackbirdGUI(QMainWindow):
                 settings = json.load(f)
             
             # Apply the loaded settings
+            self.hudson_email_input.setText(settings.get("mail to Search", ""))
             self.username_input.setText(settings.get("username", ""))
             self.email_input.setText(settings.get("email", ""))
             self.permute_checkbox.setChecked(settings.get("permute", False))
@@ -318,7 +321,7 @@ class BlackbirdGUI(QMainWindow):
             self.verbose_checkbox.setChecked(settings.get("verbose", False))
             self.dump_checkbox.setChecked(settings.get("dump", False))
             self.instagram_session_id.setText(settings.get("instagram_session_id", ""))
-
+            self.AI_checkbox.setChecked(settings.get("Extract metadata AI", False))
 
     def show_instagram_help(self):
         # Display instructions for obtaining the Instagram session ID
