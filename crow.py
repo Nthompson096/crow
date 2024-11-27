@@ -329,7 +329,6 @@ class BlackbirdGUI(QMainWindow):
                     set_method(value_type(settings[key]))
 
     def show_instagram_help(self):
-        # Display instructions for obtaining the Instagram session ID
         QMessageBox.information(self, "Instagram Session ID Help",
                                 "To use enhanced Instagram metadata extraction:\n\n"
                                 "1. Log in to Instagram in your browser\n"
@@ -339,92 +338,37 @@ class BlackbirdGUI(QMainWindow):
                                 "5. Copy its value and paste it here")
 
     def show_filter_help(self):
-        # Display a message box with the detailed help for the filter
         QMessageBox.information(self, "Filter Help",
-                                "The 'Filter' option allows you to create custom search filters using specific properties and operators.\n\n"
-                                "Properties:\n"
-                                "- name: Name of the site being checked\n"
-                                "- cat: Category of the site\n"
-                                "- uri_check: The URL used to check for the existence of an account\n"
-                                "- e_code: Expected HTTP status code when an account exists\n"
-                                "- e_string: A string expected in the response when an account exists\n"
-                                "- m_string: A string expected in the response when an account does not exist\n"
-                                "- m_code: Expected HTTP status code when an account does not exist\n\n"
-                                "Operators:\n"
-                                "- =: Equal to\n"
-                                "- ~: Contains\n"
-                                "- >: Greater than\n"
-                                "- <: Less than\n"
-                                "- >=: Greater than or equal to\n"
-                                "- <=: Less than or equal to\n"
-                                "- !=: Not equal to\n\n"
+                                "Create custom search filters using specific properties and operators.\n\n"
+                                "Properties: name, cat, uri_check, e_code, e_string, m_string, m_code\n"
+                                "Operators: =, ~, >, <, >=, <=, !=\n\n"
                                 "Examples:\n"
-                                "1. Filter by Name Contains 'Mastodon':\n"
-                                "   python blackbird.py --filter \"name~Mastodon\" --username crash\n\n"
-                                "2. Filter by Existent Code Greater Than 200:\n"
-                                "   python blackbird.py --filter \"e_code>200\" --username crash\n\n"
-                                "3. Filter by Category Equals 'social' and URI Contains '101010':\n"
-                                "   python blackbird.py --filter \"cat=social and uri_check~101010\" --username crash\n\n"
-                                "4. Filter by Error String Equals '@101010.pl' or Inexistent Code Less Than or Equal to 404:\n"
-                                "   python blackbird.py --filter \"e_string=@101010.pl or m_code<=404\" --username crash\n\n"
-                                "   you'll need to concatenate the commands for a filter if you want to use a combination\n\n"
-                                "   example: \"cat=social and name~instagram\"")
-
+                                "1. name~Mastodon\n"
+                                "2. e_code>200\n"
+                                "3. cat=social and uri_check~101010\n"
+                                "4. e_string=@101010.pl or m_code<=404\n\n"
+                                "Concatenate commands with \"\" for multiple filters.")
 
     def show_permute_help(self):
-        # Display a message box with details about permuting usernames
         QMessageBox.information(self, "Permute Username Help",
-                                "The '--permute' option generates variations of a given username.\n\n"
-                                "For example, if your username is 'balestek86', the permutations would be:\n"
-                                "balestek86\n"
-                                "_balestek86\n"
-                                "balestek86_\n"
-                                "balestek_86\n"
-                                "balestek-86\n"
-                                "balestek.86\n"
-                                "86balestek\n"
-                                "_86balestek\n"
-                                "86balestek_\n"
-                                "86_balestek\n"
-                                "86-balestek\n"
-                                "86.balestek\n\n"
-                                "NOTE: That permute username seems to only work if you only separate the username such as balestek 86.")
+                                "The '--permute' option generates variations of a username.\n\n"
+                                "For 'balestek86', permutations include:\n"
+                                "balestek86, _balestek86, balestek86_, balestek_86, balestek-86, balestek.86\n"
+                                "86balestek, _86balestek, 86balestek_, 86_balestek, 86-balestek, 86.balestek")
 
     def show_permuteall_help(self):
-        # Display a message box with details about permuting all elements
         QMessageBox.information(self, "Permute All Elements Help",
-                                "The '--permuteall' option generates a broader set of permutations for a username.\n\n"
-                                "For example, for the username 'balestek86', the permutations would include:\n"
-                                "balestek\n"
-                                "_balestek\n"
-                                "balestek_\n"
-                                "86\n"
-                                "_86\n"
-                                "86_\n"
-                                "balestek86\n"
-                                "_balestek86\n"
-                                "balestek86_\n"
-                                "balestek_86\n"
-                                "balestek-86\n"
-                                "balestek.86\n"
-                                "86balestek\n"
-                                "_86balestek\n"
-                                "86balestek_\n"
-                                "86_balestek\n"
-                                "86-balestek\n"
-                                "86.balestek\n\n"
-                                "You can use '--permuteall' to create these variations and search them.")
-
+                                "The '--permuteall' option generates a broader set of permutations.\n\n"
+                                "For 'balestek86', permutations include:\n"
+                                "balestek, _balestek, balestek_, 86, _86, 86_,\n"
+                                "balestek86, _balestek86, balestek86_, balestek_86, balestek-86, balestek.86,\n"
+                                "86balestek, _86balestek, 86balestek_, 86_balestek, 86-balestek, 86.balestek")
 
     def show_AI_help(self):
-        # Display a message box with details about permuting all elements
-        QMessageBox.information(self, "AI matadata help",
-                                "The '--ai' extracts metadata from a given username.\n\n"
-                                "For example, for the username 'balestek86', would have metadata in the search:\n"
-                                "Blackbird will automatically extract relevant metadata using AI. Results will be marked with a robot emoji (🤖) next to it for easy identification.\n"
-                                "However these results can be inaccurate due to the use of AI, sure it can extract metadata but it will limit the search!\n"
-                                "best to use your deducing skills and due diligence")
-
+        QMessageBox.information(self, "AI Metadata Help",
+                                "The '--ai' option extracts metadata using AI.\n\n"
+                                "For 'balestek86', results will be marked with a robot emoji (🤖).\n"
+                                "Note: AI results may be inaccurate, so use your own judgment.")
 
 
     def run_blackbird(self):
